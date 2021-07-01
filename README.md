@@ -32,7 +32,7 @@ The following animation demonstrates the application functionality:
 
 The following URLs have been submitted:
 
-* The URL to the deployed application : 
+* The URL to the deployed application : https://degrassi-parliament-00065.herokuapp.com/
 
 * The URL to the GitHub repository : https://github.com/zahid267/workout_tracker
 
