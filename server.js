@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
 
 // routes
 app.use(require("./routes/api.js"));
-
+/*    /// Moved in routes/app.js
 app.get('/exercise',function(req,res){
   //console.log("here in exericse html");
   res.sendFile(path.join(__dirname+'/public/exercise.html'));
@@ -26,7 +26,7 @@ app.get('/exercise',function(req,res){
 app.get('/stats',function(req,res){
   res.sendFile(path.join(__dirname+'/public/stats.html'));
 });
-
+*/
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });

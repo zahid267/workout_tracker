@@ -17,7 +17,7 @@ router.get("/api/workouts", (req, res) => {
       res.json(err);
     });
 });
-router.get("/api/workouts/range", (req, res) => {
+router.get("/api/workouts/Notused-range", (req, res) => {/// Working ok for "/range"
   //console.log("here 127 - get");
    db.Workout.find({}).sort({ day: -1 }).limit(7)   //// Sort by desc order by date/time and then select the first 7 records
    //db.Workout.stats()
@@ -31,17 +31,17 @@ router.get("/api/workouts/range", (req, res) => {
      });
  });
 
- router.get("/api/workouts/range-Aggregate", (req, res) => {
+ router.get("/api/workouts/range", (req, res) => {
   db.Workout.aggregate( [
       {
         $addFields: {
-          totalDuration: { $sum: "$exercises{$duration}" }  /// not working
+          totalDuration: { $sum: "$exercises.duration" }  /// required for Line chart on the stats page
         }
       }
     ] ).sort({ day: -1 }).limit(7)
     //db.Workout.stats()
     .then(dbWorkout => {
-       console.log(dbWorkout)
+       //console.log(dbWorkout);
        res.json(dbWorkout);
      })
      .catch(err => {
@@ -57,7 +57,7 @@ router.post("/api/workouts", async(req, res) => {
     .then(dbWorkout => {
       dbWorkout._id = dbWorkout.insertedId;
       res.json(dbWorkout);
-      console.log("new record - res : " + dbWorkout);
+      //console.log("new record - res : " + dbWorkout);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -75,6 +75,16 @@ router.put("/api/workouts/:id", (req, res) => {
       res.status(400).json(err);
     });
 
+});
+
+router.get('/exercise',function(req,res){
+  //console.log("here in routes/app.js exericse html");
+  res.sendFile(path.join(__dirname+'../../public/exercise.html'));
+});
+
+router.get('/stats',function(req,res){
+  //console.log("here in 2 routes/app.js exericse html");
+  res.sendFile(path.join(__dirname+'../../public/stats.html'));
 });
 
 module.exports = router;
