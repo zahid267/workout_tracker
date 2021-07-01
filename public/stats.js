@@ -14,7 +14,7 @@ function calculateTotalWeight(data) {
 
   return totals;
 }
-
+/*
 function calculateTotalDuration(data) {   /// new function
   const totals = [];
 
@@ -30,11 +30,11 @@ function calculateTotalDuration(data) {   /// new function
   });
 
   return totals;
-}
+}*/
 
 function populateChart(data) {
-  //const durations = data.map(({ totalDuration }) => totalDuration);
-  const durations = calculateTotalDuration(data);    /// new line
+  const durations = data.map(({ totalDuration }) => totalDuration);
+ // const durations = calculateTotalDuration(data);    /// new line - totalDuration are calculate dinside the related route
   const pounds = calculateTotalWeight(data);
 
   const line = document.querySelector('#canvas').getContext('2d');
