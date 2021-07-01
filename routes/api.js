@@ -9,7 +9,7 @@ const db = require("../models");
 
 router.get("/api/workouts", (req, res) => {
  // console.log("here 123 - get");
-  db.Workout.find({})
+  db.Workout.find({}).sort({ day: -1 }).limit(1)
     .then(dbWorkout => {
       res.json(dbWorkout);
     })
@@ -18,13 +18,34 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 router.get("/api/workouts/range", (req, res) => {
-  console.log("here 127 - get");
-   db.Workout.find({})
+  //console.log("here 127 - get");
+   db.Workout.find({}).sort({ day: -1 }).limit(7)   //// Sort by desc order by date/time and then select the first 7 records
    //db.Workout.stats()
      .then(dbWorkout => {
+      // console.log("success")
        res.json(dbWorkout);
      })
      .catch(err => {
+      // console.log(err);
+       res.json(err);
+     });
+ });
+
+ router.get("/api/workouts/range-Aggregate", (req, res) => {
+  db.Workout.aggregate( [
+      {
+        $addFields: {
+          totalDuration: { $sum: "$exercises{$duration}" }  /// not working
+        }
+      }
+    ] ).sort({ day: -1 }).limit(7)
+    //db.Workout.stats()
+    .then(dbWorkout => {
+       console.log(dbWorkout)
+       res.json(dbWorkout);
+     })
+     .catch(err => {
+      // console.log(err);
        res.json(err);
      });
  });
